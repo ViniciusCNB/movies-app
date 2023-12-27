@@ -25,5 +25,8 @@ export const styles = StyleSheet.create({
   input: {
     color: '#FFF',
     width: '80%',
+  },
+  movieList: {
+    paddingLeft: 15
   }
 })

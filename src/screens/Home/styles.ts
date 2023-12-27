@@ -19,5 +19,11 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 20,
     marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  input: {
+    color: '#FFF',
+    width: '80%',
   }
 })

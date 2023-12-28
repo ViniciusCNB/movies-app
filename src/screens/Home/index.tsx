@@ -46,6 +46,8 @@ const Home = () => {
 
     if (response.data.results.length === 0) {
       setNoResult(true)
+      setLoading(false)
+      setSearchResultMovies([])
     } else {
       setSearchResultMovies(response.data.results)
       setNoResult(false)
@@ -78,6 +80,15 @@ const Home = () => {
           />
           <MagnifyingGlass size={24} color="#FFF" weight="light" />
         </View>
+
+        <View>
+          {noResult && (
+            <Text style={styles.noResult}>
+              Nenhum filme encontrado para "{search}"
+            </Text>
+          )}
+        </View>
+
         <View style={styles.movieList}>
           <FlatList
             data={movieData}

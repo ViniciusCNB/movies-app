@@ -4,6 +4,7 @@ import { styles } from "./styles"
 import { useEffect, useState } from "react"
 import { api } from "../../services/api"
 import CardMovies from "../../components/CardMovies"
+import { useNavigation } from "@react-navigation/native"
 
 interface Movie {
   id: number
@@ -64,6 +65,15 @@ const Home = () => {
     }
   }
 
+  const navigation = useNavigation()
+
+  const renderMovieItem = ({ item }: { item: Movie }) => (
+    <CardMovies
+      data={item}
+      onPress={() => navigation.navigate("Details", { movieId: item.id })}
+    />
+  )
+
   const movieData = search.length > 2 ? searchResultMovies : discoveryMovies
 
   return (
@@ -93,7 +103,7 @@ const Home = () => {
           <FlatList
             data={movieData}
             numColumns={3}
-            renderItem={(item) => <CardMovies data={item.item} />}
+            renderItem={renderMovieItem}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               paddingBottom: 150,

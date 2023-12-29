@@ -1,4 +1,4 @@
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { useEffect, useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { api } from "../../services/api"
@@ -33,6 +33,8 @@ const Details = () => {
   const route = useRoute()
   const { movieId } = route.params as RouteProps
 
+  const navigation = useNavigation()
+
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -57,7 +59,7 @@ const Details = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <CaretLeft color="#FFF" size={32} weight="thin" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Detalhes</Text>

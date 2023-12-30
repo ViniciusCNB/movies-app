@@ -1,6 +1,12 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useEffect, useState } from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { api } from "../../services/api"
 import { styles } from "./styles"
 import {
@@ -67,67 +73,73 @@ const Details = () => {
           <BookmarkSimple color="#FFF" size={32} weight="thin" />
         </TouchableOpacity>
       </View>
-      <View>
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${movieDetails?.backdrop_path}`,
-          }}
-          style={styles.detailsImage}
-        />
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`,
-          }}
-          style={styles.detailsPosterImage}
-        />
-        <Text style={styles.movieTitle}>{movieDetails?.title}</Text>
-        <View style={styles.description}>
-          <View style={styles.descriptionGroup}>
-            <CalendarBlank color="#92929D" size={25} weight="thin" />
-            <Text style={styles.descriptionText}>
-              {getYear(movieDetails?.release_date)}
-            </Text>
-          </View>
-          <View style={styles.descriptionGroup}>
-            <Clock color="#92929D" size={25} weight="thin" />
-            <Text style={styles.descriptionText}>
-              {`${movieDetails?.runtime} min`}
-            </Text>
-          </View>
-          <View style={styles.descriptionGroup}>
-            <Star
-              color={
-                movieDetails?.vote_average.toFixed(2) >= "7"
-                  ? "#FF8700"
-                  : "#92929D"
-              }
-              size={25}
-              weight={
-                movieDetails?.vote_average.toFixed(2) >= "7"
-                  ? "duotone"
-                  : "thin"
-              }
+
+      {loading && <ActivityIndicator size="large" color="#FFF" />}
+      {!loading && (
+        <>
+          <View>
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${movieDetails?.backdrop_path}`,
+              }}
+              style={styles.detailsImage}
             />
-            <Text
-              style={[
-                movieDetails?.vote_average.toFixed(2) >= "7"
-                  ? styles.descriptionText1
-                  : styles.descriptionText,
-              ]}
-            >
-              {movieDetails?.vote_average.toFixed(1)}
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`,
+              }}
+              style={styles.detailsPosterImage}
+            />
+            <Text style={styles.movieTitle}>{movieDetails?.title}</Text>
+            <View style={styles.description}>
+              <View style={styles.descriptionGroup}>
+                <CalendarBlank color="#92929D" size={25} weight="thin" />
+                <Text style={styles.descriptionText}>
+                  {getYear(movieDetails?.release_date)}
+                </Text>
+              </View>
+              <View style={styles.descriptionGroup}>
+                <Clock color="#92929D" size={25} weight="thin" />
+                <Text style={styles.descriptionText}>
+                  {`${movieDetails?.runtime} min`}
+                </Text>
+              </View>
+              <View style={styles.descriptionGroup}>
+                <Star
+                  color={
+                    movieDetails?.vote_average.toFixed(2) >= "7"
+                      ? "#FF8700"
+                      : "#92929D"
+                  }
+                  size={25}
+                  weight={
+                    movieDetails?.vote_average.toFixed(2) >= "7"
+                      ? "duotone"
+                      : "thin"
+                  }
+                />
+                <Text
+                  style={[
+                    movieDetails?.vote_average.toFixed(2) >= "7"
+                      ? styles.descriptionText1
+                      : styles.descriptionText,
+                  ]}
+                >
+                  {movieDetails?.vote_average.toFixed(1)}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.about}>
+            <Text style={styles.aboutTitle}>Sinopse</Text>
+            <Text style={styles.aboutText}>
+              {movieDetails?.overview === ""
+                ? "Este filme não possui sinopse."
+                : movieDetails?.overview}
             </Text>
           </View>
-        </View>
-      </View>
-      <View style={styles.about}>
-        <Text style={styles.aboutTitle}>Sinopse</Text>
-        <Text style={styles.aboutText}>
-          {movieDetails?.overview === ""
-            ? "Este filme não possui sinopse."
-            : movieDetails?.overview}
-        </Text>
-      </View>
+        </>
+      )}
     </View>
   )
 }
